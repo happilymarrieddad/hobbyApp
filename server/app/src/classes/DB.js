@@ -17,7 +17,9 @@ class DB {
 			values = []
 		}
 
-		process.pool.query(sql,values,respond)
+		return pool.query(sql,values)
+
+		//process.pool.query(sql,values,respond)
 	}
 }
 

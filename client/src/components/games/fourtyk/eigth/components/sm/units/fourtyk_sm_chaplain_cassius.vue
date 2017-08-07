@@ -1,6 +1,7 @@
+
 <template lang='pug'>
 	div
-		span Tactical Squad
+		span Chaplain Cassius
 </template>
 
 <script>
@@ -8,6 +9,12 @@
 
 	export default {
 		extends:Factory,
-		name:'fourtyk-sm-tactical-squad'
+		name:'fourtyk-sm-chaplain-cassius',
+		data() {
+			return {
+				unit_type_id:3
+			}
+		}
 	}
 </script>
+			

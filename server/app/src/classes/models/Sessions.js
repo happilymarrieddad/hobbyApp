@@ -21,10 +21,10 @@ class Sessions {
 		
 		async function run() {
 			const user = await Users
-				.first({
+				.first({wheres:{
 					email:data.email,
 					visible:1
-				})
+				}})
 				.catch(err => { throw new Error(err) })
 
 			if (!user) throw new Error('No account found')

@@ -8,7 +8,7 @@
 */
 let config = require('../config.json')
 let express = require('express')
-let mysql = require('promise-mysql')
+let cluster = require('mysql-clusterfarm')
 let Server = require('./classes/Server.js')
 
 module.exports.run = function(worker) {
@@ -41,32 +41,34 @@ module.exports.run = function(worker) {
     }
 
 	// Setup Database
-	let pool = mysql.createPool(config.db)
+	let pool = cluster.createPoolClusterFarm({
+		debug:0
+	})
 
-	// for (let i = 0,ilen = config.db_config.masters.length; i < ilen; i++) {
-	// 	let master = config.db_config.masters[i]
-	// 	let master_config = {
-	// 		host:master.host,
-	// 		user:master.user,
-	// 		password:master.password,
-	// 		database:master.database
-	// 	}
+	for (let i = 0,ilen = config.db_config.masters.length; i < ilen; i++) {
+		let master = config.db_config.masters[i]
+		let master_config = {
+			host:master.host,
+			user:master.user,
+			password:master.password,
+			database:master.database
+		}
 
-	// 	pool.addMaster(`MASTER${i}`,master_config)
+		pool.addMaster(`MASTER${i}`,master_config)
 
-	// 	let slaves = master.slaves || []
-	// 	for (let j = 0,jlen = slaves.length; j < jlen; j++) {
-	// 		let slave = master.slaves[j]
-	// 		let slave_config = {
-	// 			host:slave.host,
-	// 			user:slave.user,
-	// 			password:slave.password,
-	// 			database:slave.database
-	// 		}
+		let slaves = master.slaves || []
+		for (let j = 0,jlen = slaves.length; j < jlen; j++) {
+			let slave = master.slaves[j]
+			let slave_config = {
+				host:slave.host,
+				user:slave.user,
+				password:slave.password,
+				database:slave.database
+			}
 
-	// 		pool.addSlave(`SLAVE${j}`,`MASTER${i}`,slave_config)
-	// 	}
-	// }
+			pool.addSlave(`SLAVE${j}`,`MASTER${i}`,slave_config)
+		}
+	}
 
 	process.pool = pool
 	return startWorker()

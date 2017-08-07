@@ -5,3 +5,4 @@ yarn-debug.log*
 yarn-error.log*
 **/config.json
 **/envconfig.json
+client/src/components/games/fourtyk/eigth/components/sm/units/*.vue

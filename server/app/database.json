@@ -1,0 +1,10 @@
+{
+    "dev": {
+	    "host": "localhost",
+	    "user": "root",
+	    "password" : "wurger12",
+	    "database": "army_builder",
+	    "driver": "mysql",
+	    "multipleStatements": true
+  	}
+}

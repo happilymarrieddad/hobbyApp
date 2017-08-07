@@ -1,0 +1,14 @@
+{
+  "name": "fv4",
+  "version": "1.0.0",
+  "description": "Fusion V4",
+  "main": "index.js",
+  "scripts": {
+    "dev-client": "node client/build/dev-server-direct.js",
+    "server": "node server/app/src/server.js",
+    "start": "npm run server & npm run dev-client"
+  },
+  "author": "Nick Kotenberg",
+  "license": "ISC",
+  "dependencies": {}
+}

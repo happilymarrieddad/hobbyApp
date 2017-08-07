@@ -1,0 +1,12 @@
+{
+	"ADMIN_HASH":"",
+	"LOGIN_SERVER_ADDRESS":"localhost:9000",
+	
+	"sc_config":{
+		"hostname":"localhost",
+		"secure":false,
+		"port":3000,
+		"authKey":"keyboard-cat",
+		"debug":false
+	}
+}

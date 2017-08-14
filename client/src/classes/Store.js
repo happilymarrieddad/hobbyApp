@@ -1,5 +1,7 @@
 import Vuex from 'vuex'
 
+import SMModule from '@/classes/modules/SM.js'
+
 /*
 |-----------------------------------------------------------------
 |	Store
@@ -22,7 +24,9 @@ export default class Store {
 		
 		self.events = Events
 		self.store = new Vuex.Store({
-			modules:{},
+			modules:{
+				SM:SMModule.create()
+			},
 			state:{
 				$root:null,
 				army_types:[],

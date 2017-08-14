@@ -15,6 +15,7 @@ class Controller {
 	findBy({ table,wheres },respond) {
 		let handler = new ORM({ table })
 
+		wheres.visible = 1
 		async function run() {
 			let packet = {
 				columns:['units.*','unit_types.name AS unit_type_name','unit_types.component_name AS component_name'],
@@ -25,7 +26,8 @@ class Controller {
 						table:'unit_types',
 						condition:'units.unit_type_id = unit_types.id'
 					}
-				]
+				],
+				order_by:'unit_types.role_type_id,unit_types.id'
 			}
 
 			const items = await handler.read(packet).catch(err => { throw new Error(err) })
@@ -33,7 +35,7 @@ class Controller {
 			return items || []
 		}
 
-		run().then(res => respond(null,res)).catch(err => respond(err.message))
+		run().then(res => respond(null,res)).catch(err => respond(err))
 	}
 
 	edit({ id,table },respond) {
@@ -52,7 +54,7 @@ class Controller {
 			return { unit_base_data }
 		}
 
-		run().then(res => respond(null,res)).catch(err => respond(err.message))
+		run().then(res => respond(null,res)).catch(err => respond(err))
 	}
 
 }

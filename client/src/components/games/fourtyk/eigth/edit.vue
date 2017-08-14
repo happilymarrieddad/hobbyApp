@@ -1,7 +1,7 @@
 <template lang='pug'>
 	div.row
 
-		div.col-md-2
+		div.col-md-2.hidden-print
 			template(v-for='role_type in filtered_role_types')
 				b-btn(block,v-b-toggle='"accordian" + role_type.id',variant='primary',v-show='role_type.unit_types.length') {{ role_type.name }}
 				b-collapse(:id='"accordian" + role_type.id',accordian='fourtyk8th-accordian')
@@ -12,27 +12,31 @@
 					div.col
 						strong
 							p.text-center Units
-				hr
-				br
-				div.row
-					div.col
-						keep-alive
-							template(v-if='units.length')
-								component(v-for='(unit,index) in units',:is='unit.component_name',:key='index',:item='unit')
-							template(v-else)
-								p.text-center No Units Currently Assigned to this Army
-								p.text-center Choose Some Units from the Menu on the Left
+
+			
+			div.row
+				div.col
+					template(v-if='units.length')
+						b-card(v-for='(unit,index) in units',style='margin-top:10px',:key='unit.id')
+							component(:is='unit.component_name',:key='index',:item='unit',@destroy='removeUnit',@save='saveUnit')
+					template(v-else)
+						p.text-center No Units Currently Assigned to this Army
+						p.text-center Choose Some Units from the Menu on the Left
+
 		div.col-md-2
 			b-card(variant='primary')
 				div.row
 					div.col
-						strong Name: 
-						br
-						span {{ name }}
+						strong {{ name }}
 				hr
 				div.row
-					div.col-md-4 Pts: {{ points }}
-					div.col-md-8 Pwr Lvl: {{ power_level }}
+					div.col
+						strong Pts:
+						span.float-right {{ pts }}
+				div.row
+					div.col
+						strong Pwr Lvl: 
+						span.float-right {{ power_level }}
 
 </template>
 
@@ -47,11 +51,26 @@
 			return {
 				units:[],
 				army_type_id:0,
-				max_points:0,
+				max_pts:0,
 				name:''
 			}
 		},
 		methods:{
+			saveUnit(data) {
+				console.log('Save unit')
+				console.log(data)
+			},
+			removeUnit(id) {
+				if (!id) return
+
+				this.$socket.emit('request',{
+					controller:'units',
+					method:'destroy',
+					id:id
+				})
+				.then(data => this.fetchUnits())
+				.catch(err => console.log(err))
+			},
 			addUnit(unit_type) {
 				let vm = this
 
@@ -97,11 +116,8 @@
 			power_level() {
 				return 0
 			},
-			points() {
+			pts() {
 				return 0
-			},
-			id() {
-				return this.$route.params.id
 			},
 			filtered_role_types() {
 				let vm = this

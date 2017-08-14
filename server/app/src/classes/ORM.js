@@ -118,12 +118,11 @@ class ORM extends DB {
 			}
 
 			// Conditionals
-			if (options.wheres || options.wh || options.cond || options.contionals) {
-				setWhere = true
-				qry += ` WHERE 1 = 1 `
-				options.wheres = options.wh || options.wheres || options.cond || options.contionals
-				qry += self.buildConditionals(options.wheres,values)
-			}
+			options.wheres = options.wh || options.wheres || options.cond || options.contionals || {}
+			options.wheres.visible = 1
+			setWhere = true
+			qry += ` WHERE 1 = 1 `
+			qry += self.buildConditionals(options.wheres,values)
 
 			// Search
 			if (options.search && options.search.length) {
@@ -259,7 +258,36 @@ class ORM extends DB {
 		let self = this
 
 		return new Promise((resolve,reject) => {
+			options.table = options.table || self._table
+			if (!options.id) return reject('An id(s) is required to destroy')
+			
+			// Method
+			let qry = `DELETE FROM ?? `
+			let values = [options.table]
 
+			// Set method
+			qry += ` WHERE id IN (${ options.id }) `
+
+			if (self._debug) {
+				console.log(` \nDEBUG `)
+				console.log(qry)
+				console.log(values)
+				console.log(` DEBUG\n `)
+			}
+
+			if (pool) {
+				return pool.query(qry,values,(err,rows) => {
+					if (err) return reject(err)
+
+					return resolve(rows)
+				})
+			}
+
+			self.query(qry,values,(err,rows) => {
+				if (err) return reject(err)
+
+				return resolve(rows)
+			})
 		})
 	}
 

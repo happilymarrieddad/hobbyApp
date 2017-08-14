@@ -26,8 +26,8 @@
     "promise-mysql": "^3.0.2",
     "sc-cluster-broker-client": "^1.0.5",
     "sc-hot-reboot": "^1.0.0",
-    "socketcluster": "^6.7.1",
-    "socketcluster-client": "^6.3.0",
+    "socketcluster": "^7.0.0",
+    "socketcluster-client": "^7.0.0",
     "util-deprecate": "^1.0.2",
     "uuid": "^3.1.0"
   }

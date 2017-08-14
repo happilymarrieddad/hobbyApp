@@ -29,7 +29,7 @@ class Controller {
 			return { item }
 		}
 
-		run().then(res => respond(null,res)).catch(err => respond(err.message))
+		run().then(res => respond(null,res)).catch(err => respond(err))
 	}
 
 }

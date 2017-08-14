@@ -3,7 +3,7 @@
 		props:['item'],
 		data() {
 			return {
-
+				ready:false
 			}
 		},
 		methods:{
@@ -15,8 +15,8 @@
 					method:'edit',
 					id:vm.item.id
 				}).then(data => {
-					console.log('Unit Factory data.')
-					console.log(data)
+
+					vm.handleData(data)
 				}).catch(vm.$growl.error)
 			}
 		},

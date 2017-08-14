@@ -73,7 +73,7 @@ class Controller {
 			return res
 		}
 
-		run().then(res => respond(null,res)).catch(err => respond(err.message))
+		run().then(res => respond(null,res)).catch(err => respond(err))
 	}
 
 	all({ table },respond) {
@@ -89,7 +89,7 @@ class Controller {
 			return { items }
 		}
 
-		run().then(res => respond(null,res)).catch(err => respond(err.message))
+		run().then(res => respond(null,res)).catch(err => respond(err))
 	}
 
 	findBy({ table,wheres },respond) {
@@ -105,7 +105,7 @@ class Controller {
 			return items || []
 		}
 
-		run().then(res => respond(null,res)).catch(err => respond(err.message))
+		run().then(res => respond(null,res)).catch(err => respond(err))
 	}
 
 	edit({ id,table },respond) {
@@ -124,7 +124,7 @@ class Controller {
 			return { item }
 		}
 
-		run().then(res => respond(null,res)).catch(err => respond(err.message))
+		run().then(res => respond(null,res)).catch(err => respond(err))
 	}
 
 	update({ id,table,put },respond) {
@@ -137,21 +137,33 @@ class Controller {
 			}
 
 			const [res] = await Promise.all([
-				handler.update(packet).catch(err => respond(err.message))
+				handler.update(packet).catch(err => { throw new Error(err) })
 			])
 
 			return { res }
 		}
 
-		run().then(res => respond(null,res)).catch(err => respond(err.message))
+		run().then(res => respond(null,res)).catch(err => respond(err))
 	}
 
 	create(data,respond) {
 		console.log('create')
 	}
 
-	destroy(data,respond) {
-		console.log('destroy')
+	destroy({ id,table },respond) {
+		let handler = new ORM({table})
+
+		async function run() {
+			let packet = {
+				id
+			}
+
+			const res = await handler.destroy(packet).catch(err => { throw new Error(err) })
+
+			return res
+		}
+
+		run().then(res => respond(null,res)).catch(err => respond(err))
 	}
 
 }

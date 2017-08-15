@@ -51,7 +51,14 @@ export default class SM {
 					{ text:'Multi-Melta (27)',value:'Multi-Melta' },
 					{ text:'Plasma Cannon (21)',value:'Plasma Cannon' }
 				],
-
+				scout_heavy:[
+					{ text:'Boltgun (0)',value:'Boltgun' },
+					{ text:'Shogun (0)',value:'Shogun' },
+					{ text:'Combat Knife (0)',value:'Combat Knife' },
+					{ text:'Sniper Rifle (4)',value:'Sniper Rifle' },
+					{ text:'Heavy Bolter (10)',value:'Heavy Bolter' },
+					{ text:'Missile-Launcher (25)',value:'Missile-Launcher' }
+				],
 
 
 				equipment_pts:[
@@ -70,6 +77,10 @@ export default class SM {
 					{ text:'Combi-Melta',value:19 },
 					{ text:'Combi-Plasma',value:15 },
 					{ text:'Storm Bolter',value:2 },
+
+					{ text:'Shogun',value:0 },
+					{ text:'Combat Knife',value:0 },
+					{ text:'Sniper Rifle',value:4 },
 
 					{ text:'Bolt Rifle',value:0 },
 					{ text:'Auto Bolt Rifle',value:1 },

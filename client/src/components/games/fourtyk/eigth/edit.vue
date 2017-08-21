@@ -81,9 +81,11 @@
 						army_id:vm.$route.params.id,
 						unit_type_id:unit_type.id
 					}
-				}).then(data => {
+				})
+				.then(data => {
 					vm.fetchUnits()
-				}).catch(this.$growl.error)
+				})
+				.catch(err => console.log(err))
 			},
 			fetchUnits() {
 				let vm = this
@@ -94,7 +96,7 @@
 					wheres: { army_id:vm.$route.params.id }
 				}).then(data => {
 					vm.units = data || []
-				}).catch(this.$growl.error)
+				}).catch(err => console.log(err))
 			},
 			fetchData() {
 				let vm = this
@@ -109,7 +111,7 @@
 
 					Object.keys(item).forEach(key => vm[key] = item[key])
 					vm.fetchUnits()
-				}).catch(this.$growl.error)
+				}).catch(err => console.log(err))
 			}
 		},
 		computed:{

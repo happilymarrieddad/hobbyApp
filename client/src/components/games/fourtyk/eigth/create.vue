@@ -55,7 +55,7 @@
 					}
 
 					vm.$router.push(route_packet)
-				}).catch(vm.$growl.error)
+				}).catch(err => console.log(err))
 			}
 		},
 		computed:{

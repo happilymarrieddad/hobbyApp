@@ -50,7 +50,7 @@
 					wheres:{ army_type_id:1 }
 				}).then(data => {
 					vm.$store.commit('set',{ prop:'armies',val:data.items })
-				}).catch(vm.$growl.error)
+				}).catch(err => console.log(err))
 			}
 		},
 		computed:{
